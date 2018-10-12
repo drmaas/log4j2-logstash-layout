@@ -35,6 +35,7 @@ import org.apache.logging.log4j.core.jackson.Log4jJsonObjectMapper;
 import org.apache.logging.log4j.core.jackson.XmlConstants;
 import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 import org.apache.logging.log4j.core.util.KeyValuePair;
+import org.apache.logging.log4j.util.Strings;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -266,7 +267,11 @@ public final class LogstashJsonLayout extends AbstractJacksonLayout {
         }
 
         // Go over MDC
-        logEvent.getContextData().forEach(additionalFieldsMap::put);
+        logEvent.getContextData().forEach((key, value) -> {
+            if (Strings.isNotBlank(key) && value != null) {
+                additionalFieldsMap.put(key, value);
+            }
+        });
 
         return additionalFieldsMap;
     }
