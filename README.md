@@ -66,7 +66,7 @@ You should see in your logstash console a message like:
       "A": "B"
     }
 
-Where `Foo` and `A` are values added to the MDC. This layout places MDC attributes at the top level of the log event for easier indexing and readability, and replaces the `contextMap` object. Note tha the `contextMap` object can still be enabled if desired.
+Where `Foo` and `A` are values added to the MDC. This layout places MDC attributes at the top level of the log event for easier indexing and readability, and replaces the `contextMap` object. Note that the `contextMap` object can still be enabled if desired.
 
 ### Using in uberjars
 
