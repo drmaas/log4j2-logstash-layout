@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.apache.logging.log4j.core.Layout;
@@ -266,19 +265,8 @@ public final class LogstashJsonLayout extends AbstractJacksonLayout {
             }
         }
 
-        // Go over MDC, unescape json
-        logEvent.getContextData().forEach((key, value) -> {
-            if (isJson(value.toString())) {
-                try {
-                    JsonNode node = objectMapper.readTree(value.toString());
-                    additionalFieldsMap.put(key, node);
-                } catch (IOException e) {
-                    additionalFieldsMap.put(key, value);
-                }
-            } else {
-                additionalFieldsMap.put(key, value);
-            }
-        });
+        // Go over MDC
+        logEvent.getContextData().forEach(additionalFieldsMap::put);
 
         return additionalFieldsMap;
     }
