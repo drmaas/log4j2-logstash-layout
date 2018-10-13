@@ -276,14 +276,6 @@ public final class LogstashJsonLayout extends AbstractJacksonLayout {
         return additionalFieldsMap;
     }
 
-    private boolean isJson(String value) {
-        if (value.matches("^\\[(.*)]$") || value.matches("^\\{.*}$")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @JsonRootName(XmlConstants.ELT_EVENT)
     @JacksonXmlRootElement(namespace = XmlConstants.XML_NAMESPACE, localName = XmlConstants.ELT_EVENT)
     public static class LogEventWithAdditionalFields {
